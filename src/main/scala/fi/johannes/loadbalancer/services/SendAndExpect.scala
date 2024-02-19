@@ -51,6 +51,5 @@ object SendAndExpect {
             .handleErrorWith(_ => warn"$uri is dead" *> ServerHealthStatus.Dead.pure[IO])
     }
 
-  val BackendSuccessTest: SendAndExpect[String] = _ => IO("Success")
 
 }

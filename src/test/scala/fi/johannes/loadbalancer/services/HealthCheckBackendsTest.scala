@@ -20,7 +20,7 @@ class HealthCheckBackendsTest extends CatsEffectSuite {
         ParseUri.Impl,
         UpdateBackendsAndGet.Impl,
         RoundRobin.forHealthChecks,
-        SendAndExpect.toHealthCheck(HttpClient.Hello)
+        SendAndExpect.toHealthCheck(HttpClientTesting.Hello)
       )
     yield result
 
@@ -38,7 +38,7 @@ class HealthCheckBackendsTest extends CatsEffectSuite {
         ParseUri.Impl,
         UpdateBackendsAndGet.Impl,
         RoundRobin.forHealthChecks,
-        SendAndExpect.toHealthCheck(HttpClient.TestTimeoutFailure)
+        SendAndExpect.toHealthCheck(HttpClientTesting.TestTimeoutFailure)
       )
     yield result
 

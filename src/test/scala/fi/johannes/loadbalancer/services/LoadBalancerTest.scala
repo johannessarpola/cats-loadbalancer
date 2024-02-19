@@ -17,7 +17,7 @@ class LoadBalancerTest extends CatsEffectSuite {
           backends <- IO.ref(Urls.empty)
           loadBalancer = LoadBalancer.from(
             Backends(backends),
-            _ => SendAndExpect.BackendSuccessTest,
+            _ => SendAndExpectTesting.BackendSuccessTest,
             ParseUri.Impl,
             AddRequestPathToBackendUrl.Impl,
             RoundRobin.forBackends
@@ -35,10 +35,10 @@ class LoadBalancerTest extends CatsEffectSuite {
           backends <- IO.ref(Urls(Vector("localhost:8081", "localhost:8082").map(Url.apply)))
           loadBalancer = LoadBalancer.from(
             Backends(backends),
-            _ => SendAndExpect.BackendSuccessTest,
+            _ => SendAndExpectTesting.BackendSuccessTest,
             ParseUri.Impl,
             AddRequestPathToBackendUrl.Impl,
-            RoundRobin.LocalHost8081
+            RoundRobinTesting.LocalHost8081
           )
           result <- loadBalancer.orNotFound.run(Request[IO](uri = Uri.unsafeFromString("localhost:8080/items/1")))
         } yield result.body.compile.toVector.map(bytes => String(bytes.toArray))
@@ -54,7 +54,7 @@ class LoadBalancerTest extends CatsEffectSuite {
           emptyRequest = Request[IO]()
           loadBalancer = LoadBalancer.from(
             Backends(backends),
-            _ => SendAndExpect.toBackend(HttpClient.BackendResourceNotFound, Request[IO]()),
+            _ => SendAndExpect.toBackend(HttpClientTesting.BackendResourceNotFound, Request[IO]()),
             ParseUri.Impl,
             AddRequestPathToBackendUrl.Impl,
             RoundRobin.forBackends

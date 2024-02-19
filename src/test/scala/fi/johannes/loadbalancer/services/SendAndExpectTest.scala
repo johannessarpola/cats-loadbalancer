@@ -13,35 +13,35 @@ class SendAndExpectTest extends CatsEffectSuite {
   val emptyRequest  = Request[IO]()
 
   test("toBackend [Success]") {
-    val sendAndExpect = SendAndExpect.toBackend(HttpClient.Hello, emptyRequest)
+    val sendAndExpect = SendAndExpect.toBackend(HttpClientTesting.Hello, emptyRequest)
     val obtained      = sendAndExpect(backend)
 
     assertIO(obtained, "Hello")
   }
 
   test("toBackend [Failure]") {
-    val sendAndExpect = SendAndExpect.toBackend(HttpClient.RuntimeException, emptyRequest)
+    val sendAndExpect = SendAndExpect.toBackend(HttpClientTesting.RuntimeException, emptyRequest)
     val obtained      = sendAndExpect(backend)
 
     assertIO(obtained, s"server with uri: $localhost8080 is dead")
   }
 
   test("toHealthCheck [Alive]") {
-    val sendAndExpect = SendAndExpect.toHealthCheck(HttpClient.Hello)
+    val sendAndExpect = SendAndExpect.toHealthCheck(HttpClientTesting.Hello)
     val obtained      = sendAndExpect(backend)
 
     assertIO(obtained, ServerHealthStatus.Alive)
   }
 
   test("toHealthCheck [Dead due to timeout]") {
-    val sendAndExpect = SendAndExpect.toHealthCheck(HttpClient.TestTimeoutFailure)
+    val sendAndExpect = SendAndExpect.toHealthCheck(HttpClientTesting.TestTimeoutFailure)
     val obtained      = sendAndExpect(backend)
 
     assertIO(obtained, ServerHealthStatus.Dead)
   }
 
   test("toHealthCheck [Dead due to exception]") {
-    val sendAndExpect = SendAndExpect.toHealthCheck(HttpClient.RuntimeException)
+    val sendAndExpect = SendAndExpect.toHealthCheck(HttpClientTesting.RuntimeException)
     val obtained      = sendAndExpect(backend)
 
     assertIO(obtained, ServerHealthStatus.Dead)
