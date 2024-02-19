@@ -12,9 +12,9 @@ final case class Config(
   healthCheckInterval: HealthCheckInterval,
 ) derives ConfigReader
 
-object Config {
+object Config:
 
-  /*   
+  /*
   First of all the derives ConfigReader annotation instructs PureConfig
   to automatically derive a configuration reader for this case class,
   allowing it to be used to parse configuration files into Config instances.
@@ -22,38 +22,28 @@ object Config {
   Because extending AnyVal prevents using derives clauses,
   so need to define the given-s ourselves.
 
-  given urlsReader: 
+  given urlsReader:
     ConfigReader[Urls]: This custom reader is defined
     for the Urls type and instructs PureConfig to read a configuration
     value of type Vector[Url] and map it to an Urls instance using
     the Urls.apply constructor.
 
-  given urlReader: ConfigReader[Url]: 
+  given urlReader: ConfigReader[Url]:
     This custom reader is defined
     for the Url type and instructs PureConfig to read a configuration
     value of type String and map it to a Url instance using the
     Url.apply constructor.
 
-  given healthCheckReader: 
+  given healthCheckReader:
     ConfigReader[HealthCheckInterval]:
     This custom reader is defined for the HealthCheckInterval
     type and instructs PureConfig to read a configuration value
     of type Long and map it to a HealthCheckInterval instance
     using the HealthCheckInterval.apply constructor.
- */
+   */
   given urlsReader: ConfigReader[Urls] = ConfigReader[Vector[Url]].map(Urls.apply)
 
   given urlReader: ConfigReader[Url] = ConfigReader[String].map(Url.apply)
 
   given healthCheckReader: ConfigReader[HealthCheckInterval] =
     ConfigReader[Long].map(HealthCheckInterval.apply)
-}
-
-object config {
-  type InvalidConfig = InvalidConfig.type
-
-  case object InvalidConfig extends Throwable {
-    override def getMessage: String =
-      "Invalid port or host, please fix Config"
-  }
-}

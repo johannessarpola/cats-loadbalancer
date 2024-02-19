@@ -2,7 +2,7 @@ package fi.johannes.loadbalancer.domain
 
 import scala.util.Try
 
-final case class Urls(values: Vector[Url]) extends AnyVal {
+final case class Urls(values: Vector[Url]) extends AnyVal:
 
   def currentOpt: Option[Url] =
     Try(currentUnsafe).toOption
@@ -16,8 +16,6 @@ final case class Urls(values: Vector[Url]) extends AnyVal {
   def add(url: Url): Urls =
     if (values contains url) this
     else copy(values :+ url)
-}
 
-object Urls {
+object Urls:
   def empty: Urls = Urls(Vector.empty)
-}

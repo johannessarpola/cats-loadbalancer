@@ -1,5 +1,5 @@
 package fi.johannes.loadbalancer.http
 
-enum ServerHealthStatus {
+enum ServerHealthStatus:
   case Alive, Dead
-}
+
