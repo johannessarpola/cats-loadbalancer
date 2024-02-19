@@ -42,11 +42,11 @@ object SendAndExpect {
   def toHealthCheck(httpClient: HttpClient): SendAndExpect[ServerHealthStatus] =
     new SendAndExpect[ServerHealthStatus] {
       override def apply(uri: Uri): IO[ServerHealthStatus] =
-        info"[HEALTH-CHECK] checking $uri health" *>
+        debug"[HEALTH-CHECK] checking $uri health" *>
           httpClient
             .sendAndReceive(uri, none)
             .as(ServerHealthStatus.Alive)
-            .flatTap(_ => info"$uri is alive")
+            .flatTap(_ => debug"$uri is alive")
             .timeout(timeOut)
             .handleErrorWith(_ => warn"$uri is dead" *> ServerHealthStatus.Dead.pure[IO])
     }
