@@ -1,7 +1,7 @@
 package fi.johannes.loadbalancer.services
 
 import cats.effect.IO
-import fi.johannes.loadbalancer.http.ServerHealthStatus
+import fi.johannes.loadbalancer.domain.ServerHealthStatus
 import fi.johannes.loadbalancer.domain.Urls
 import fi.johannes.loadbalancer.domain.Url
 import fi.johannes.loadbalancer.domain.UrlsRef

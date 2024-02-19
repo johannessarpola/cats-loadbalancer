@@ -8,7 +8,7 @@ import fi.johannes.loadbalancer.domain.UrlsRef.{Backends, HealthChecks}
 import fi.johannes.loadbalancer.services.RoundRobin.{BackendsRoundRobin, HealthChecksRoundRobin}
 import fi.johannes.loadbalancer.services.{
   AddRequestPathToBackendUrl,
-  HealthCheckBackends,
+  HealthChecker,
   LoadBalancer,
   ParseUri,
   SendAndExpect,
@@ -25,7 +25,7 @@ object HttpServer {
     healthChecks: HealthChecks,
     port: Port,
     host: Host,
-    healthCheckInterval: HealthCheckInterval,
+    healthCheckInterval: Interval,
     parseUri: ParseUri,
     updateBackendsAndGet: UpdateBackendsAndGet,
     backendsRoundRobin: BackendsRoundRobin,
@@ -50,7 +50,7 @@ object HttpServer {
               .withPort(port)
               .withHttpApp(httpApp)
               .build
-          _ <- HealthCheckBackends.periodically(
+          _ <- HealthChecker.periodically(
                   healthChecks,
                   backends,
                   parseUri,

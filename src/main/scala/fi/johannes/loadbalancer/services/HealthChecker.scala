@@ -2,13 +2,13 @@ package fi.johannes.loadbalancer.services
 
 import fi.johannes.loadbalancer.domain.*
 import fi.johannes.loadbalancer.domain.UrlsRef.*
-import fi.johannes.loadbalancer.http.ServerHealthStatus
+import fi.johannes.loadbalancer.domain.ServerHealthStatus
 import fi.johannes.loadbalancer.services.RoundRobin.HealthChecksRoundRobin
 import cats.effect.IO
 
 import scala.concurrent.duration.DurationLong
 
-object HealthCheckBackends {
+object HealthChecker {
 
   def periodically(
     healthChecks: HealthChecks,
@@ -17,7 +17,7 @@ object HealthCheckBackends {
     updateBackendsAndGet: UpdateBackendsAndGet,
     healthChecksRoundRobin: HealthChecksRoundRobin,
     sendAndExpectStatus: SendAndExpect[ServerHealthStatus],
-    healthCheckInterval: HealthCheckInterval,
+    healthCheckInterval: Interval,
   ): IO[Unit] =
     checkHealthAndUpdateBackends(
       healthChecks,

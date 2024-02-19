@@ -9,7 +9,7 @@ final case class Config(
   port: Int,
   host: String,
   backends: Urls,
-  healthCheckInterval: HealthCheckInterval,
+  healthCheckInterval: Interval,
 ) derives ConfigReader
 
 object Config:
@@ -45,5 +45,5 @@ object Config:
 
   given urlReader: ConfigReader[Url] = ConfigReader[String].map(Url.apply)
 
-  given healthCheckReader: ConfigReader[HealthCheckInterval] =
-    ConfigReader[Long].map(HealthCheckInterval.apply)
+  given healthCheckReader: ConfigReader[Interval] =
+    ConfigReader[Long].map(Interval.apply)

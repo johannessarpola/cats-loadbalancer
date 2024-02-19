@@ -11,7 +11,7 @@ import cats.syntax.applicative._
 
 import scala.concurrent.duration.DurationInt
 import fi.johannes.loadbalancer.http.HttpClient
-import fi.johannes.loadbalancer.http.ServerHealthStatus
+import fi.johannes.loadbalancer.domain.ServerHealthStatus
 
 trait SendAndExpect[A] {
   def apply(uri: Uri): IO[A]

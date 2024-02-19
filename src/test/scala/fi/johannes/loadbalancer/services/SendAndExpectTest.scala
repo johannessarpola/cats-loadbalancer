@@ -4,7 +4,7 @@ import cats.effect.IO
 import org.http4s.{Request, Uri}
 import munit.{CatsEffectSuite, FunSuite}
 import fi.johannes.loadbalancer.http.HttpClient
-import fi.johannes.loadbalancer.http.ServerHealthStatus
+import fi.johannes.loadbalancer.domain.ServerHealthStatus
 
 class SendAndExpectTest extends CatsEffectSuite {
 
